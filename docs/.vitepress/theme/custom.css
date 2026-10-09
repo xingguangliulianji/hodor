@@ -1,0 +1,14 @@
+/*
+ * 首页 hero 副标题（h1 内的 .text，如「Telegram 双向私聊机器人」）为中文长标题，
+ * 默认主题字号 32/48/56px 在半栏内容列内会折行；压到 24/40px 保持单行。
+ * 只命中 h1 内的副标题——tagline（p.tagline）与导航栏不受影响。
+ */
+.VPHero h1 .text {
+  font-size: 24px;
+}
+
+@media (min-width: 640px) {
+  .VPHero h1 .text {
+    font-size: 40px;
+  }
+}

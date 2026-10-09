@@ -1,0 +1,14 @@
+{
+  "name": "hodor-docs",
+  "version": "0.1.0",
+  "private": true,
+  "description": "hodor 项目文档服务（VitePress），独立于主应用，不安装到仓库根目录",
+  "scripts": {
+    "dev": "vitepress dev",
+    "build": "vitepress build",
+    "preview": "vitepress preview"
+  },
+  "devDependencies": {
+    "vitepress": "^1.6.3"
+  }
+}

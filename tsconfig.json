@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "lib": ["ESNext"],
+    // cloudflare:test 虚拟模块的类型来源（0.22 起位于该子路径，见 spec/backend/testing.md）
+    "types": ["@cloudflare/vitest-pool-workers/types"],
+    "strict": true,
+    "noEmit": true,
+    "isolatedModules": true,
+    "skipLibCheck": true
+  },
+  "files": [
+    // src/env.d.ts 必须显式列出：TS 展开 include glob（src/**/*）时，同名兄弟
+    // env.ts 按扩展名优先级（.ts > .d.ts）把 env.d.ts 挤出枚举，手工维护的
+    // Cloudflare.Env 合并随之静默失效（2026-09-30 实测；include 显式列出同样被去重，
+    // 唯有顶层数 files 不走 glob 展开）
+    "src/env.d.ts"
+  ],
+  "include": [
+    "src/**/*",
+    "test/**/*",
+    "vitest.config.ts",
+    "worker-configuration.d.ts"
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  // wrangler 本地环境文件无标准扩展名，编辑器默认按纯文本处理；按 properties 语法高亮 KEY=VALUE 与 # 注释
+  "files.associations": {
+    ".dev.vars*": "properties"
+  }
+}

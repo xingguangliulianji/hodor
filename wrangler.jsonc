@@ -1,0 +1,29 @@
+{
+  // 编辑器 schema 校验（npm install 后生效）
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // Worker 名称，部署后为 <name>.<account>.workers.dev
+  "name": "hodor",
+  // fetch 入口（路由层保持极薄，见 docs/guide/architecture.md 分层设计）
+  "main": "src/index.ts",
+  // workerd 支持上限：写超前日期会让 wrangler dev / vitest 启动失败，
+  // 不随当天日期漂移（见 .trellis/spec/backend/testing.md 错误矩阵）
+  "compatibility_date": "2026-08-22",
+  // keep_vars：wrangler deploy 默认会把面板 Text 变量重置为 config 内容，
+  // 开启后 dashboard 配置的变量跨部署保留；Secret 本就不因部署被删除。
+  // 仓库中不出现任何 [vars]，变量值只活在面板 / .dev.vars。
+  "keep_vars": true,
+  // Workers Logs 观测开关
+  "observability": {
+    "enabled": true
+  },
+  "d1_databases": [
+    {
+      "binding": "HODOR_DB",
+      "database_name": "hodor",
+      // 占位符常驻仓库（fork 用户不能带上部署者的真实 id）：
+      // 手动部署时临时替换为真实 id，提交前还原；自动解析属阶段 7。
+      "database_id": "b5339efe-19df-40cc-9b68-e146e70e8b40",
+      "migrations_dir": "migrations"
+    }
+  ]
+}

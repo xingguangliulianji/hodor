@@ -1,0 +1,36 @@
+{
+  "name": "hodor",
+  "version": "1.6.0",
+  "private": true,
+  "description": "Telegram forum-topics 客服消息中继 Bot，Cloudflare Workers + D1",
+  "type": "module",
+  "scripts": {
+    "postinstall": "node scripts/deploy.mjs --install-hook",
+    "predev": "node scripts/gen-version.mjs",
+    "dev": "wrangler dev",
+    "pretest": "node scripts/gen-version.mjs",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "pretest:watch": "node scripts/gen-version.mjs",
+    "pretypecheck": "node scripts/gen-version.mjs",
+    "typecheck": "tsc --noEmit",
+    "version:gen": "node scripts/gen-version.mjs",
+    "deploy": "node scripts/deploy.mjs",
+    "provision": "node scripts/deploy.mjs --provision-only",
+    "db:migrate:local": "wrangler d1 migrations apply hodor --local",
+    "db:migrate:remote": "node scripts/deploy.mjs --migrate-only",
+    "cf-typegen": "wrangler types",
+    "docs:install": "npm --prefix docs install",
+    "docs:dev": "npm run docs:_ensure && npm --prefix docs run dev",
+    "docs:build": "npm run docs:_ensure && npm --prefix docs run build",
+    "docs:preview": "npm run docs:_ensure && npm --prefix docs run preview",
+    "docs:_ensure": "test -d docs/node_modules/vitepress || npm --prefix docs install"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@cloudflare/vitest-pool-workers": "^0.22.0",
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.11",
+    "wrangler": "^4.144.0"
+  }
+}

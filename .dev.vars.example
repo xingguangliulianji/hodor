@@ -1,0 +1,37 @@
+# hodor 环境变量总表（共 9 个变量，对齐 docs/guide/deploy.md）。本文件一职两用：
+# (a) 本地开发模板：cp .dev.vars.example .dev.vars 后逐行取消注释并填入真值
+#     （5 条必填必须启用，4 条选填按需；.dev.vars 已被 git 忽略，绝不提交）。
+# (b) Deploy 按钮 / Workers 导入向导的变量表单清单：向导按本文件生成表单，未注释条目
+#     即必填密文输入框，注释条目被跳过。下方条目全部保持注释 = 部署时零变量提示；
+#     所有变量部署后在 Cloudflare 面板 → Worker → 设置 → 变量和机密 自助配置
+#     （建议类型：TELEGRAM_BOT_TOKEN / TELEGRAM_WEBHOOK_SECRET / ADMIN_SECRET 用机密，
+#     SUPPORT_CHAT_ID / ADMIN_IDS 用文本；4 条选填文本类型、均有内置默认值），配好后用
+#     curl https://<worker-url>/selfcheck 逐项核对（缺项时 503，failed 数组逐条点名）。
+#     wrangler.jsonc 已开启 keep_vars: true，面板变量跨部署保留，Secret 本就不因部署删除。
+
+# 【必填 Secret】Bot Token（@BotFather /newbot 获取），所有 Bot API 调用凭证，永不进 URL / 日志
+# TELEGRAM_BOT_TOKEN=123456:ABC-your-bot-token
+
+# 【必填 Secret】Webhook 校验 secret_token（≥16 位，字母数字下划线连字符；三个 Secret 请互不相同）
+# TELEGRAM_WEBHOOK_SECRET=change-me-webhook-secret
+
+# 【必填 Secret】管理端点凭证，作为 URL 路径段使用（/setwebhook/<ADMIN_SECRET>、/deletewebhook/<ADMIN_SECRET>，浏览器可直接访问，非 Bearer 头）
+# ADMIN_SECRET=change-me-admin-secret
+
+# 【必填 Var】客服超级群 chat_id（-100 开头，开话题功能后获取）
+# SUPPORT_CHAT_ID=-1000000000000
+
+# 【必填 Var】管理员 Telegram 用户 ID，逗号分隔，支持多个
+# ADMIN_IDS=123456789
+
+# 【选填 Var】每用户每分钟转发上限，超限触发重新验证；缺省 20
+# MAX_MESSAGES_PER_MINUTE=20
+
+# 【选填 Var】验证有效期（小时），0 = 永久；缺省 0
+# VERIFY_TTL_HOURS=0
+
+# 【选填 Var】同一条 update 处理失败的最大重试次数，超限标记 failed 跳过；缺省 3
+# MAX_ATTEMPTS=3
+
+# 【选填 Var】自定义欢迎语（支持换行，字面 \n 解释为换行）；未配置或为空时使用内置默认文案
+# WELCOME_TEXT=你好，欢迎咨询！\n直接发送消息即可与客服对话。
